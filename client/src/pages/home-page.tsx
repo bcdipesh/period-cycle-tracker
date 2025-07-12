@@ -7,8 +7,6 @@ import { Card, CardContent } from '@/components/ui/card';
 export default function HomePage() {
   return (
     <>
-      {/* <Header /> */}
-
       {/* Hero Section */}
       <section className="container mx-auto max-w-6xl px-4 py-16 text-center">
         <div className="mx-auto max-w-3xl">
@@ -151,8 +149,6 @@ export default function HomePage() {
           </CardContent>
         </Card>
       </section>
-
-      {/* <Footer /> */}
     </>
   );
 }
