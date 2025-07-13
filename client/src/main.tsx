@@ -10,6 +10,7 @@ import HomePage from '@/pages/home-page';
 import NotFound from '@/pages/not-found';
 import SignIn from '@/components/sign-in';
 import SignUp from '@/components/sign-up';
+import { ThemeProvider } from './components/theme-provider';
 
 const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -20,19 +21,24 @@ if (!CLERK_PUBLISHABLE_KEY) {
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<AppLayout />}>
-            <Route index element={<HomePage />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
+      <ThemeProvider
+        defaultTheme="dark"
+        storageKey="period-cycle-tracker-app-theme"
+      >
+        <BrowserRouter>
+          <Routes>
+            <Route element={<AppLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
 
-          <Route element={<AuthLayout />}>
-            <Route path="/sign-in/*" element={<SignIn />} />
-            <Route path="/sign-up/*" element={<SignUp />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+            <Route element={<AuthLayout />}>
+              <Route path="/sign-in/*" element={<SignIn />} />
+              <Route path="/sign-up/*" element={<SignUp />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </ThemeProvider>
     </ClerkProvider>
   </StrictMode>
 );
