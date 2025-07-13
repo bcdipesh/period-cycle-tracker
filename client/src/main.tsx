@@ -1,12 +1,15 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router';
-import { ClerkProvider, SignIn, SignUp } from '@clerk/clerk-react';
+import { ClerkProvider } from '@clerk/clerk-react';
 import '@/index.css';
 
 import AppLayout from '@/layouts/app-layout';
+import AuthLayout from '@/layouts/auth-layout';
 import HomePage from '@/pages/home-page';
 import NotFound from '@/pages/not-found';
+import SignIn from '@/components/sign-in';
+import SignUp from '@/components/sign-up';
 
 const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -23,14 +26,11 @@ createRoot(document.getElementById('root')!).render(
             <Route index element={<HomePage />} />
             <Route path="*" element={<NotFound />} />
           </Route>
-          <Route
-            path="/sign-in/*"
-            element={<SignIn routing="path" path="/sign-in" />}
-          />
-          <Route
-            path="/sign-up/*"
-            element={<SignUp routing="path" path="/sign-up" />}
-          />
+
+          <Route element={<AuthLayout />}>
+            <Route path="/sign-in/*" element={<SignIn />} />
+            <Route path="/sign-up/*" element={<SignUp />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </ClerkProvider>
