@@ -2,7 +2,7 @@ import { Outlet } from 'react-router';
 
 import { useTheme } from '@/hooks/use-theme';
 
-export default function AppLayout() {
+export default function AuthLayout() {
   const { theme: currentAppTheme } = useTheme();
 
   return (
