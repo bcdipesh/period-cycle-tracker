@@ -7,10 +7,12 @@ import '@/index.css';
 import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import HomePage from '@/pages/home-page';
+import DashboardPage from '@/pages/dashboard/dashboard-page';
 import NotFound from '@/pages/not-found';
 import SignIn from '@/components/sign-in';
 import SignUp from '@/components/sign-up';
 import { ThemeProvider } from './components/theme-provider';
+import { ProtectedRoute } from '@/components/protected-route';
 
 const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -29,6 +31,14 @@ createRoot(document.getElementById('root')!).render(
           <Routes>
             <Route element={<AppLayout />}>
               <Route index element={<HomePage />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <DashboardPage />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="*" element={<NotFound />} />
             </Route>
 
