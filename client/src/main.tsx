@@ -11,7 +11,7 @@ import DashboardPage from '@/pages/dashboard/dashboard-page';
 import NotFound from '@/pages/not-found';
 import SignIn from '@/components/sign-in';
 import SignUp from '@/components/sign-up';
-import { ThemeProvider } from './components/theme-provider';
+import { ThemeProvider } from '@/components/theme-provider';
 import { ProtectedRoute } from '@/components/protected-route';
 
 const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
