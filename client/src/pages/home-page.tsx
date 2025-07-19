@@ -1,10 +1,37 @@
+import { useEffect } from 'react';
 import { Bell, Calendar, Shield, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router';
+import { useAuth } from '@clerk/clerk-react';
+import { useNavigate } from 'react-router';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function HomePage() {
+  const { isSignedIn, isLoaded } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoaded && isSignedIn) {
+      navigate('/dashboard');
+    }
+  }, [isLoaded, isSignedIn, navigate]);
+
+  if (!isLoaded) {
+    return (
+      <div className="container mx-auto max-w-md px-4 py-16">
+        <div className="flex flex-col space-y-3">
+          <Skeleton className="h-[125px] w-[448px] rounded-xl" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 max-w-xl" />
+            <Skeleton className="h-4 w-[200px]" />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       {/* Hero Section */}
