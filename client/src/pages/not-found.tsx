@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 
 export default function NotFound() {
   return (
-    <section className="flex flex-col justify-center items-center min-h-screen text-center">
+    <section className="text-center my-10">
       <header className="space-y-3">
         <h1 className="bg-gradient-to-r from-rose-600 to-purple-600 bg-clip-text text-6xl font-bold text-transparent dark:from-rose-400 dark:to-purple-400">
           404
