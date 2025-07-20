@@ -23,44 +23,58 @@ if (!CLERK_PUBLISHABLE_KEY) {
   throw new Error('Missing Clerk Publishable Key');
 }
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
-      <ThemeProvider
-        defaultTheme="dark"
-        storageKey="period-cycle-tracker-app-theme"
-      >
-        <BrowserRouter>
-          <Routes>
-            <Route element={<AppLayout />}>
-              <Route index element={<HomePage />} />
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <DashboardPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/settings"
-                element={
-                  <ProtectedRoute>
-                    <SettingsPage />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="*" element={<NotFound />} />
-            </Route>
+async function enableMocking() {
+  if (import.meta.env.PROD) {
+    return;
+  }
 
-            <Route element={<AuthLayout />}>
-              <Route path="/sign-in/*" element={<SignIn />} />
-              <Route path="/sign-up/*" element={<SignUp />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
-    </ClerkProvider>
-    <Toaster position="top-center" />
-  </StrictMode>,
-);
+  const { worker } = await import('@/mocks/browser');
+
+  // `worker.start()` returns a Promise that resolves
+  // once the Service Worker is up and ready to intercept requests.
+  return worker.start();
+}
+
+enableMocking().then(() => {
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <ClerkProvider publishableKey={CLERK_PUBLISHABLE_KEY}>
+        <ThemeProvider
+          defaultTheme="dark"
+          storageKey="period-cycle-tracker-app-theme"
+        >
+          <BrowserRouter>
+            <Routes>
+              <Route element={<AppLayout />}>
+                <Route index element={<HomePage />} />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <ProtectedRoute>
+                      <DashboardPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/settings"
+                  element={
+                    <ProtectedRoute>
+                      <SettingsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route path="*" element={<NotFound />} />
+              </Route>
+
+              <Route element={<AuthLayout />}>
+                <Route path="/sign-in/*" element={<SignIn />} />
+                <Route path="/sign-up/*" element={<SignUp />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </ThemeProvider>
+      </ClerkProvider>
+      <Toaster position="top-center" />
+    </StrictMode>,
+  );
+});
