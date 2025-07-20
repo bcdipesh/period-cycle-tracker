@@ -1,5 +1,5 @@
-import { useOutletContext } from 'react-router';
 import { SignUp as ClerkSignUp } from '@clerk/clerk-react';
+import { useOutletContext } from 'react-router';
 
 import { getFormAppearance } from '@/lib/clerk';
 

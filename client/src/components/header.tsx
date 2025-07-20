@@ -1,9 +1,9 @@
-import { Link } from 'react-router';
 import { SignedIn, SignedOut, UserButton } from '@clerk/clerk-react';
+import { Link } from 'react-router';
 
 import { Logo } from '@/components/logo';
-import { Button } from '@/components/ui/button';
 import { ModeToggle } from '@/components/mode-toggle';
+import { Button } from '@/components/ui/button';
 
 export function Header() {
   return (

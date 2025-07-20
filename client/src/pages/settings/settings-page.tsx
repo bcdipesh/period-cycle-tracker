@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router';
+
 import { ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router';
+
+import { Button } from '@/components/ui/button';
 
 import { SettingsForm } from './components/settings-form';
 import { SettingsFormSkeleton } from './components/settings-form-skeleton';
-
-import { Button } from '@/components/ui/button';
 
 interface UserSettings {
   averageCycleLength: number;

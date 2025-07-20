@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+
 import { useAuth } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router';
 

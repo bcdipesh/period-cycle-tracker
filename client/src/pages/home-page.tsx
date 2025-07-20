@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
+
+import { useAuth } from '@clerk/clerk-react';
 import { Bell, Calendar, Shield, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router';
-import { useAuth } from '@clerk/clerk-react';
 import { useNavigate } from 'react-router';
 
 import { Button } from '@/components/ui/button';

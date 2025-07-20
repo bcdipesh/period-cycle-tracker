@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router';
+
 import { format } from 'date-fns';
 import { ChevronRight, Cog } from 'lucide-react';
+import { Link } from 'react-router';
+
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -53,8 +55,8 @@ export function CurrentCycle() {
                 startDate: new Date('07/12/2025'),
                 endDate: new Date('07/16/2025'),
               }),
-            2000
-          )
+            2000,
+          ),
         );
         setPeriod(period);
         setIsLoading(false);

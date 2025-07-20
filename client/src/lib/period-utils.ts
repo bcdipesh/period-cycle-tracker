@@ -26,7 +26,7 @@ export function calculateCurrentPeriodCycle(periodStartDate?: Date) {
 
   const calendarDaysDifference = differenceInCalendarDays(
     today,
-    periodStartDate
+    periodStartDate,
   );
 
   // The + 1 converts the 0-indexed duration calculated by the machine
@@ -93,7 +93,7 @@ export function predictFertileWindowForNextCycle({
   // 0-indexed (adding 0 days gives the same day).
   const startDate = addDays(
     nextCycleStartDate,
-    fertileWindowStartDayInCycle - 1
+    fertileWindowStartDayInCycle - 1,
   );
   const endDate = addDays(nextCycleStartDate, fertileWindowEndDayInCycle - 1);
 
@@ -115,6 +115,6 @@ export function correctDate(utcDate: Date): Date {
   return new Date(
     utcDate.getUTCFullYear(),
     utcDate.getUTCMonth(),
-    utcDate.getUTCDate()
+    utcDate.getUTCDate(),
   );
 }

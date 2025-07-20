@@ -1,8 +1,9 @@
 import { useEffect, useTransition } from 'react';
-import z from 'zod';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
+import z from 'zod';
 
 import { SubmitButton } from '@/components/submit-button';
 import {
@@ -61,7 +62,7 @@ export function SettingsForm({ settings }: SettingsFormProps) {
   const onSubmit = (data: UserSettings) => {
     startTransition(async () => {
       const result = await new Promise<UserSettings>((resolve) =>
-        setTimeout(() => resolve(data), 2000)
+        setTimeout(() => resolve(data), 2000),
       );
 
       if (result) {
