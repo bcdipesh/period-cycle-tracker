@@ -11,8 +11,10 @@ import DashboardPage from '@/pages/dashboard/dashboard-page';
 import NotFound from '@/pages/not-found';
 import SignIn from '@/components/sign-in';
 import SignUp from '@/components/sign-up';
+import SettingsPage from '@/pages/settings/settings-page';
 import { ThemeProvider } from '@/components/theme-provider';
 import { ProtectedRoute } from '@/components/protected-route';
+import { Toaster } from '@/components/ui/sonner';
 
 const CLERK_PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
@@ -39,6 +41,14 @@ createRoot(document.getElementById('root')!).render(
                   </ProtectedRoute>
                 }
               />
+              <Route
+                path="/settings"
+                element={
+                  <ProtectedRoute>
+                    <SettingsPage />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="*" element={<NotFound />} />
             </Route>
 
@@ -50,5 +60,6 @@ createRoot(document.getElementById('root')!).render(
         </BrowserRouter>
       </ThemeProvider>
     </ClerkProvider>
+    <Toaster position="top-center" />
   </StrictMode>
 );
