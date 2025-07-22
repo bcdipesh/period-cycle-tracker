@@ -4,6 +4,8 @@ import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router';
 
 import { Button } from '@/components/ui/button';
+import { usePeriodApi } from '@/hooks/use-period-api';
+import { PERIOD_API_ROUTES } from '@/lib/period-api-routes';
 
 import { SettingsForm } from './components/settings-form';
 import { SettingsFormSkeleton } from './components/settings-form-skeleton';
@@ -17,18 +19,14 @@ export default function SettingsPage() {
   const navigate = useNavigate();
   const [settings, setSettings] = useState<UserSettings | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { authenticatedFetch } = usePeriodApi();
 
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const userSettings = await new Promise<UserSettings>((resolve) => {
-          setTimeout(() => {
-            resolve({
-              averageCycleLength: 28,
-              averagePeriodLength: 5,
-            });
-          }, 2000);
-        });
+        const userSettings = await authenticatedFetch(
+          PERIOD_API_ROUTES.GET_PERIOD_SETTINGS,
+        );
         setSettings(userSettings);
       } catch (error) {
         console.error('Failed to fetch settings', error);
@@ -38,7 +36,7 @@ export default function SettingsPage() {
     };
 
     fetchSettings();
-  }, []);
+  }, [authenticatedFetch]);
 
   return (
     <main className="mx-auto max-w-md">

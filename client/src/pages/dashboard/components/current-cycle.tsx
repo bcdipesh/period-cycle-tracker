@@ -15,6 +15,8 @@ import {
 } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Skeleton } from '@/components/ui/skeleton';
+import { usePeriodApi } from '@/hooks/use-period-api';
+import { PERIOD_API_ROUTES } from '@/lib/period-api-routes';
 import {
   calculateCurrentPeriodCycle,
   correctDate,
@@ -30,6 +32,7 @@ interface Period {
 export function CurrentCycle() {
   const [isLoading, setIsLoading] = useState(true);
   const [period, setPeriod] = useState<Period | null>(null);
+  const { authenticatedFetch } = usePeriodApi();
 
   let nextPeriod = null;
   if (period?.startDate) {
@@ -46,19 +49,13 @@ export function CurrentCycle() {
   }
 
   useEffect(() => {
-    const fetchCycleData = async () => {
+    const fetchLatestCycle = async () => {
       try {
-        const period = await new Promise<Period>((resolve) =>
-          setTimeout(
-            () =>
-              resolve({
-                startDate: new Date('07/12/2025'),
-                endDate: new Date('07/16/2025'),
-              }),
-            2000,
-          ),
-        );
-        setPeriod(period);
+        const period = await authenticatedFetch(PERIOD_API_ROUTES.GET_LATEST);
+        setPeriod({
+          startDate: new Date(period.startDate),
+          endDate: new Date(period.endDate),
+        });
         setIsLoading(false);
       } catch (error) {
         console.error('Error fetching cycle data:', error);
@@ -66,8 +63,8 @@ export function CurrentCycle() {
       }
     };
 
-    fetchCycleData();
-  }, []);
+    fetchLatestCycle();
+  }, [authenticatedFetch]);
 
   return (
     <Card className="mb-6 border-0 dark:bg-gradient-to-br dark:from-rose-950 dark:via-gray-950 dark:to-gray-950">

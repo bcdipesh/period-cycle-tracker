@@ -23,6 +23,8 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { usePeriodApi } from '@/hooks/use-period-api';
+import { PERIOD_API_ROUTES } from '@/lib/period-api-routes';
 
 const formSchema = z.object({
   averageCycleLength: z.coerce
@@ -43,6 +45,7 @@ interface SettingsFormProps {
 
 export function SettingsForm({ settings }: SettingsFormProps) {
   const [isPending, startTransition] = useTransition();
+  const { authenticatedFetch } = usePeriodApi();
 
   const form = useForm<UserSettings>({
     // @ts-expect-error Unable to resolve the unknown type in the formSchema
@@ -61,8 +64,12 @@ export function SettingsForm({ settings }: SettingsFormProps) {
 
   const onSubmit = (data: UserSettings) => {
     startTransition(async () => {
-      const result = await new Promise<UserSettings>((resolve) =>
-        setTimeout(() => resolve(data), 2000),
+      const result = await authenticatedFetch(
+        PERIOD_API_ROUTES.UPDATE_PERIOD_SETTINGS,
+        {
+          method: 'POST',
+          body: JSON.stringify(data),
+        },
       );
 
       if (result) {
