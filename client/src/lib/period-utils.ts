@@ -66,36 +66,32 @@ export function predictNextPeriod({
 }
 
 /**
- * Predicts the fertile window for the upcoming menstrual cycle based on the last one.
- * The fertile window is anchored to the predicted start date of the next cycle.
+ * Predicts the fertile window for the current menstrual cycle based on the last one.
+ * The fertile window is anchored to the start date of the current cycle.
  *
  * @param {object} params - The prediction parameters.
  * @param {Date} params.lastPeriodStartDate - The start date of the last known period.
- * @param {number} [params.averageCycleLength=28] - The user's average cycle length in days.
  * @returns {{startDate: Date, endDate: Date} | null} The predicted start and end dates of the fertile window, or null.
  */
-export function predictFertileWindowForNextCycle({
+export function predictFertileWindowForCurrentCycle({
   lastPeriodStartDate,
-  averageCycleLength = 28,
 }: {
   lastPeriodStartDate: Date;
-  averageCycleLength?: number;
 }) {
   if (!lastPeriodStartDate || !isValid(lastPeriodStartDate)) {
     return null;
   }
 
-  const nextCycleStartDate = addDays(lastPeriodStartDate, averageCycleLength);
-  const fertileWindowStartDayInCycle = averageCycleLength - 19;
-  const fertileWindowEndDayInCycle = averageCycleLength - 13;
+  const fertileWindowStartDayInCycle = 10;
+  const fertileWindowEndDayInCycle = 16;
 
   // We subtract 1 because addDays is
   // 0-indexed (adding 0 days gives the same day).
   const startDate = addDays(
-    nextCycleStartDate,
+    lastPeriodStartDate,
     fertileWindowStartDayInCycle - 1,
   );
-  const endDate = addDays(nextCycleStartDate, fertileWindowEndDayInCycle - 1);
+  const endDate = addDays(lastPeriodStartDate, fertileWindowEndDayInCycle - 1);
 
   return {
     startDate,
