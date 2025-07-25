@@ -20,7 +20,7 @@ import { PERIOD_API_ROUTES } from '@/lib/period-api-routes';
 import {
   calculateCurrentPeriodCycle,
   correctDate,
-  predictFertileWindowForNextCycle,
+  predictFertileWindowForCurrentCycle,
   predictNextPeriod,
 } from '@/lib/period-utils';
 
@@ -43,7 +43,7 @@ export function CurrentCycle() {
 
   let nextFertileWindow = null;
   if (period?.startDate) {
-    nextFertileWindow = predictFertileWindowForNextCycle({
+    nextFertileWindow = predictFertileWindowForCurrentCycle({
       lastPeriodStartDate: correctDate(period.startDate),
     });
   }
