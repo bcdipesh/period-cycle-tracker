@@ -57,4 +57,21 @@ export const handlers = [
 
     return HttpResponse.json(updatedSettings);
   }),
+
+  http.post(PERIOD_API_ROUTES.CREATE, async ({ request }) => {
+    const authHeader = request.headers.get('Authorization');
+
+    // Await a random realistic server response time.
+    await delay();
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return new HttpResponse(JSON.stringify({ message: 'Unauthorized' }), {
+        status: 401,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+
+    const period = await request.clone().json();
+
+    return HttpResponse.json(period);
+  }),
 ];
