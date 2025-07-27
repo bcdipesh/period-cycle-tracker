@@ -141,7 +141,12 @@ export function LogPeriodForm() {
                     How many days did this period last?
                   </FormDescription>
                   <FormControl className="w-[240px]">
-                    <Input type="number" placeholder="e.g., 5" {...field} />
+                    <Input
+                      type="number"
+                      inputMode="numeric"
+                      placeholder="e.g., 5"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
