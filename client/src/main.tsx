@@ -14,6 +14,7 @@ import AppLayout from '@/layouts/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import DashboardPage from '@/pages/dashboard/dashboard-page';
 import HomePage from '@/pages/home-page';
+import LogPeriodPage from '@/pages/log/log-period-page';
 import NotFound from '@/pages/not-found';
 import SettingsPage from '@/pages/settings/settings-page';
 
@@ -60,6 +61,14 @@ enableMocking().then(() => {
                   element={
                     <ProtectedRoute>
                       <SettingsPage />
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/log"
+                  element={
+                    <ProtectedRoute>
+                      <LogPeriodPage />
                     </ProtectedRoute>
                   }
                 />
