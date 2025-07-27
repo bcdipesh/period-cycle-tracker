@@ -82,17 +82,17 @@ export function SettingsForm({ settings }: SettingsFormProps) {
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <Card>
-          <CardHeader>
-            <CardTitle>Cycle Settings</CardTitle>
-            <CardDescription>
-              Customize your cycle tracking experience by adjusting the average
-              length of your menstrual cycle and period.
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
+    <Card className="mb-6 border-0 dark:bg-gradient-to-br dark:from-rose-950 dark:via-gray-950 dark:to-gray-950">
+      <CardHeader>
+        <CardTitle>Cycle Settings</CardTitle>
+        <CardDescription>
+          Customize your cycle tracking experience by adjusting the average
+          length of your menstrual cycle and period.
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="space-y-4">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <FormField
               control={form.control}
               name="averageCycleLength"
@@ -125,13 +125,11 @@ export function SettingsForm({ settings }: SettingsFormProps) {
                 </FormItem>
               )}
             />
-          </CardContent>
-        </Card>
 
-        <div className="flex justify-end">
-          <SubmitButton isSubmitting={isPending}>Save Changes</SubmitButton>
-        </div>
-      </form>
-    </Form>
+            <SubmitButton isSubmitting={isPending}>Save Changes</SubmitButton>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   );
 }
