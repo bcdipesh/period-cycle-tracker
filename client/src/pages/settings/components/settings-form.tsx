@@ -102,7 +102,7 @@ export function SettingsForm({ settings }: SettingsFormProps) {
                     This is the average length of your menstrual cycle in days.
                   </FormDescription>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input type="number" inputMode="numeric" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -118,7 +118,7 @@ export function SettingsForm({ settings }: SettingsFormProps) {
                     This is the average length of your menstrual period in days.
                   </FormDescription>
                   <FormControl>
-                    <Input type="number" {...field} />
+                    <Input type="number" inputMode="numeric" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
