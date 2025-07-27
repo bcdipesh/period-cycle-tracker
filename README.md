@@ -97,6 +97,6 @@ In the project directory, you can run:
 
 ## 📄 License
 
-This project is distributed under the MIT License. See the `LICENSE` file for more information.
+This project is distributed under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
 Creating with ❤️ for my wife by Dipesh B C [@bcdipesh](https://dipeshbc.com)
