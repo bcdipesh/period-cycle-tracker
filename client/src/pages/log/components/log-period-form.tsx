@@ -84,9 +84,9 @@ export function LogPeriodForm() {
           Add a past or current period to improve your cycle predictions.
         </CardDescription>
       </CardHeader>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(logPeriod)}>
-          <CardContent className="space-y-4">
+      <CardContent className="space-y-4">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(logPeriod)} className="space-y-6">
             <FormField
               control={form.control}
               name="periodStartDate"
@@ -149,9 +149,9 @@ export function LogPeriodForm() {
             />
 
             <SubmitButton isSubmitting={isPending}>Save Period</SubmitButton>
-          </CardContent>
-        </form>
-      </Form>
+          </form>
+        </Form>
+      </CardContent>
     </Card>
   );
 }
