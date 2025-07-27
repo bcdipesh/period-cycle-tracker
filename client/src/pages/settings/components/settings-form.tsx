@@ -28,13 +28,13 @@ import { PERIOD_API_ROUTES } from '@/lib/period-api-routes';
 
 const formSchema = z.object({
   averageCycleLength: z.coerce
-    .number()
-    .min(20, 'Must be at least 20')
-    .optional(),
+    .number<number>()
+    .min(20, 'Cycle length should be at least 20 days.')
+    .max(90, 'Cycle length cannot exceed 90 days.'),
   averagePeriodLength: z.coerce
-    .number()
-    .min(1, 'Must be at least 1')
-    .optional(),
+    .number<number>()
+    .min(1, { error: 'Period length should be at least 1 day.' })
+    .max(10, { error: 'Period length should be at most 10 days.' }),
 });
 
 type UserSettings = z.infer<typeof formSchema>;
@@ -48,7 +48,6 @@ export function SettingsForm({ settings }: SettingsFormProps) {
   const { authenticatedFetch } = usePeriodApi();
 
   const form = useForm<UserSettings>({
-    // @ts-expect-error Unable to resolve the unknown type in the formSchema
     resolver: zodResolver(formSchema),
     defaultValues: {
       averageCycleLength: settings.averageCycleLength ?? 28,
@@ -103,7 +102,7 @@ export function SettingsForm({ settings }: SettingsFormProps) {
                     This is the average length of your menstrual cycle in days.
                   </FormDescription>
                   <FormControl>
-                    <Input {...field} />
+                    <Input type="number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -119,7 +118,7 @@ export function SettingsForm({ settings }: SettingsFormProps) {
                     This is the average length of your menstrual period in days.
                   </FormDescription>
                   <FormControl>
-                    <Input {...field} />
+                    <Input type="number" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
