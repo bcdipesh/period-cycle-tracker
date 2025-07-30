@@ -86,7 +86,8 @@ export function SettingsForm({ settings }: SettingsFormProps) {
         <CardTitle>Cycle Settings</CardTitle>
         <CardDescription>
           Customize your cycle tracking experience by adjusting the average
-          length of your menstrual cycle and period.
+          length of your menstrual cycle and period. This will help improve the
+          accuracy of your future cycle predictions.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -97,13 +98,15 @@ export function SettingsForm({ settings }: SettingsFormProps) {
               name="averageCycleLength"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Average Cycle Length</FormLabel>
-                  <FormDescription>
-                    This is the average length of your menstrual cycle in days.
-                  </FormDescription>
+                  <FormLabel>Average cycle length (days)</FormLabel>
                   <FormControl>
                     <Input type="number" inputMode="numeric" {...field} />
                   </FormControl>
+                  <FormDescription>
+                    This is the average number of days between the start of one
+                    period and the start of the next. This is used to predict
+                    your next period.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -113,13 +116,14 @@ export function SettingsForm({ settings }: SettingsFormProps) {
               name="averagePeriodLength"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Average Period Length</FormLabel>
-                  <FormDescription>
-                    This is the average length of your menstrual period in days.
-                  </FormDescription>
+                  <FormLabel>Average period length (days)</FormLabel>
                   <FormControl>
                     <Input type="number" inputMode="numeric" {...field} />
                   </FormControl>
+                  <FormDescription>
+                    This is the average number of days that your period lasts.
+                    This is used to predict the end of your period.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
