@@ -1,4 +1,4 @@
-import { useTransition } from 'react';
+import { useEffect, useTransition } from 'react';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { format, startOfDay } from 'date-fns';
@@ -17,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
@@ -40,12 +41,11 @@ const formSchema = z.object({
   periodStartDate: z.date({
     error: 'Start date is required.',
   }),
+  isOngoingPeriod: z.boolean(),
   periodLength: z.coerce
-    .number<number>({
-      error: 'Duration is required.',
-    })
-    .min(1, { error: 'Duration should be at least 1 day.' })
-    .max(10, { error: 'Duration should be at most 10 days.' }),
+    .number<number>('Duration is required.')
+    .min(1, 'Duration should be at least 1 day.')
+    .max(10, 'Duration should be at most 10 days.'),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -58,8 +58,18 @@ export function LogPeriodForm() {
     defaultValues: {
       periodStartDate: startOfDay(new Date()),
       periodLength: 5,
+      isOngoingPeriod: false,
     },
   });
+  const isOngoingPeriod = form.watch('isOngoingPeriod');
+
+  useEffect(() => {
+    if (isOngoingPeriod) {
+      form.setValue('periodLength', 1);
+    } else {
+      form.setValue('periodLength', 5);
+    }
+  }, [isOngoingPeriod, form]);
 
   const logPeriod = async (values: z.infer<typeof formSchema>) => {
     startTransition(async () => {
@@ -81,7 +91,9 @@ export function LogPeriodForm() {
       <CardHeader>
         <CardTitle>Log a Period</CardTitle>
         <CardDescription>
-          Add a past or current period to improve your cycle predictions.
+          Log a past or current period to enhance the accuracy of your cycle
+          predictions. Each entry helps in providing more precise insights into
+          your menstrual health.
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -92,10 +104,7 @@ export function LogPeriodForm() {
               name="periodStartDate"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Period Start Date</FormLabel>
-                  <FormDescription>
-                    Select the first day this period began.
-                  </FormDescription>
+                  <FormLabel>Period start date</FormLabel>
                   <Popover>
                     <PopoverTrigger asChild>
                       <FormControl>
@@ -127,27 +136,52 @@ export function LogPeriodForm() {
                       />
                     </PopoverContent>
                   </Popover>
+                  <FormDescription>
+                    Select the date when your period started.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
+              name="isOngoingPeriod"
+              render={({ field }) => (
+                <FormItem className="flex items-center">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="ml-2 space-y-1">
+                    <FormLabel>My period is still ongoing</FormLabel>
+                    <FormDescription>
+                      Select this if your period has started but not yet ended.
+                    </FormDescription>
+                  </div>
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              control={form.control}
               name="periodLength"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Duration (days)</FormLabel>
-                  <FormDescription>
-                    How many days did this period last?
-                  </FormDescription>
+                  <FormLabel>Period duration (days)</FormLabel>
                   <FormControl className="w-[240px]">
                     <Input
                       type="number"
                       inputMode="numeric"
                       placeholder="e.g., 5"
                       {...field}
+                      disabled={isOngoingPeriod}
                     />
                   </FormControl>
+                  <FormDescription>
+                    Enter the total number of days your period lasted.
+                  </FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
