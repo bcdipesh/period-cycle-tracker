@@ -26,15 +26,20 @@ import { Input } from '@/components/ui/input';
 import { usePeriodApi } from '@/hooks/use-period-api';
 import { PERIOD_API_ROUTES } from '@/lib/period-api-routes';
 
+const AVG_CYCLE_LENGTH_VALIDATION_ERR_MSG =
+  'According to the American College of Obstetricians and Gynecologists, a cycle length of 21 to 35 days is within the normal range. If your average cycle is below 21 days or above 35 days, your cycle may be irregular, so speak to a health care professional for more information.';
+const AVG_PERIOD_LENGTH_VALIDATION_ERR_MSG =
+  'According to the American College of Obstetricians and Gynecologists, a typical period lasts between two to seven days. If your period lasts less than two days or more than seven days, you may be experiencing abnormal bleeding. Speak to a health care professional for more information.';
+
 const formSchema = z.object({
   averageCycleLength: z.coerce
     .number<number>()
-    .min(20, 'Cycle length should be at least 20 days.')
-    .max(90, 'Cycle length cannot exceed 90 days.'),
+    .min(21, AVG_CYCLE_LENGTH_VALIDATION_ERR_MSG)
+    .max(35, AVG_CYCLE_LENGTH_VALIDATION_ERR_MSG),
   averagePeriodLength: z.coerce
     .number<number>()
-    .min(1, { error: 'Period length should be at least 1 day.' })
-    .max(10, { error: 'Period length should be at most 10 days.' }),
+    .min(2, AVG_PERIOD_LENGTH_VALIDATION_ERR_MSG)
+    .max(7, AVG_PERIOD_LENGTH_VALIDATION_ERR_MSG),
 });
 
 type UserSettings = z.infer<typeof formSchema>;
