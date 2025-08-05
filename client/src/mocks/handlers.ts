@@ -17,8 +17,8 @@ export const handlers = [
 
     return HttpResponse.json({
       id: 'abc-123',
-      startDate: new Date('07/12/2025'),
-      endDate: new Date('07/16/2025'),
+      startDate: new Date('2025-08-01T14:00:00.000Z'),
+      endDate: new Date('2025-08-05T14:00:00.000Z'),
     });
   }),
 
