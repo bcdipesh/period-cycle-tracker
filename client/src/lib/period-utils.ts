@@ -68,30 +68,25 @@ export function predictNextPeriod({
 }
 
 /**
- * Predicts the fertile window for the current menstrual cycle based on the last one.
- * The fertile window is anchored to the start date of the current cycle.
+ * Predicts the fertile window for the current menstrual cycle based on start
+ * date of next cycle.
  *
  * @param {object} params - The prediction parameters.
- * @param {Date} params.lastPeriodStartDate - The start date of the last known period.
+ * @param {Date} params.nextPeriodStartDate - The start date of the next period.
  * @returns {{startDate: Date, endDate: Date} | null} The predicted start and end dates of the fertile window, or null.
  */
 export function predictFertileWindowForCurrentCycle({
-  lastPeriodStartDate,
+  nextPeriodStartDate,
 }: {
-  lastPeriodStartDate: Date;
+  nextPeriodStartDate: Date;
 }) {
-  if (!lastPeriodStartDate || !isValid(lastPeriodStartDate)) {
-    return null;
-  }
-
-  const nextPeriod = predictNextPeriod({ lastPeriodStartDate });
-  if (!nextPeriod) {
+  if (!nextPeriodStartDate || !isValid(nextPeriodStartDate)) {
     return null;
   }
 
   // Ovulation typically occurs 14 days BEFORE the next period starts.
   const LUTEAL_PHASE_LENGTH = 14;
-  const ovulationDate = subDays(nextPeriod.startDate, LUTEAL_PHASE_LENGTH);
+  const ovulationDate = subDays(nextPeriodStartDate, LUTEAL_PHASE_LENGTH);
 
   const startDate = subDays(ovulationDate, 5);
   const endDate = ovulationDate;
