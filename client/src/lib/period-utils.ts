@@ -3,6 +3,7 @@ import {
   differenceInCalendarDays,
   isValid,
   startOfToday,
+  subDays,
 } from 'date-fns';
 
 /**
@@ -82,16 +83,17 @@ export function predictFertileWindowForCurrentCycle({
     return null;
   }
 
-  const fertileWindowStartDayInCycle = 10;
-  const fertileWindowEndDayInCycle = 16;
+  const nextPeriod = predictNextPeriod({ lastPeriodStartDate });
+  if (!nextPeriod) {
+    return null;
+  }
 
-  // We subtract 1 because addDays is
-  // 0-indexed (adding 0 days gives the same day).
-  const startDate = addDays(
-    lastPeriodStartDate,
-    fertileWindowStartDayInCycle - 1,
-  );
-  const endDate = addDays(lastPeriodStartDate, fertileWindowEndDayInCycle - 1);
+  // Ovulation typically occurs 14 days BEFORE the next period starts.
+  const LUTEAL_PHASE_LENGTH = 14;
+  const ovulationDate = subDays(nextPeriod.startDate, LUTEAL_PHASE_LENGTH);
+
+  const startDate = subDays(ovulationDate, 5);
+  const endDate = ovulationDate;
 
   return {
     startDate,
