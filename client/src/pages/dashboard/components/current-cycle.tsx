@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { format } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { ChevronRight, Cog } from 'lucide-react';
 import { Link } from 'react-router';
 
@@ -41,9 +41,9 @@ export function CurrentCycle() {
   }
 
   let nextFertileWindow = null;
-  if (period?.startDate) {
+  if (nextPeriod) {
     nextFertileWindow = predictFertileWindowForCurrentCycle({
-      lastPeriodStartDate: period.startDate,
+      nextPeriodStartDate: nextPeriod.startDate,
     });
   }
 
@@ -52,8 +52,8 @@ export function CurrentCycle() {
       try {
         const period = await authenticatedFetch(PERIOD_API_ROUTES.GET_LATEST);
         setPeriod({
-          startDate: new Date(period.startDate),
-          endDate: new Date(period.endDate),
+          startDate: parseISO(period.startDate),
+          endDate: parseISO(period.endDate),
         });
         setIsLoading(false);
       } catch (error) {
