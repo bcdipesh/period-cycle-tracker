@@ -19,7 +19,6 @@ import { usePeriodApi } from '@/hooks/use-period-api';
 import { PERIOD_API_ROUTES } from '@/lib/period-api-routes';
 import {
   calculateCurrentPeriodCycle,
-  correctDate,
   predictFertileWindowForCurrentCycle,
   predictNextPeriod,
 } from '@/lib/period-utils';
@@ -37,14 +36,14 @@ export function CurrentCycle() {
   let nextPeriod = null;
   if (period?.startDate) {
     nextPeriod = predictNextPeriod({
-      lastPeriodStartDate: correctDate(period.startDate),
+      lastPeriodStartDate: period.startDate,
     });
   }
 
   let nextFertileWindow = null;
   if (period?.startDate) {
     nextFertileWindow = predictFertileWindowForCurrentCycle({
-      lastPeriodStartDate: correctDate(period.startDate),
+      lastPeriodStartDate: period.startDate,
     });
   }
 
@@ -82,7 +81,7 @@ export function CurrentCycle() {
           {isLoading ? (
             <Skeleton className="h-5 w-20" />
           ) : period?.startDate ? (
-            calculateCurrentPeriodCycle(correctDate(period.startDate))
+            calculateCurrentPeriodCycle(period.startDate)
           ) : (
             <p className="text-muted-foreground">No data</p>
           )}
@@ -99,7 +98,7 @@ export function CurrentCycle() {
                 <Skeleton className="h-5 w-20" />
               ) : period?.startDate ? (
                 <p className="text-muted-foreground">
-                  {format(correctDate(period.startDate), 'MMM dd')}
+                  {format(period.startDate, 'MMM dd')}
                 </p>
               ) : (
                 <p className="text-muted-foreground">No data</p>
@@ -111,8 +110,8 @@ export function CurrentCycle() {
                 <Skeleton className="h-5 w-20" />
               ) : nextFertileWindow ? (
                 <p className="text-muted-foreground">
-                  {format(correctDate(nextFertileWindow.startDate), 'MMM dd')} —{' '}
-                  {format(correctDate(nextFertileWindow.endDate), 'MMM dd')}
+                  {format(nextFertileWindow.startDate, 'MMM dd')} —{' '}
+                  {format(nextFertileWindow.endDate, 'MMM dd')}
                 </p>
               ) : (
                 <p className="text-muted-foreground">No data</p>
@@ -124,8 +123,8 @@ export function CurrentCycle() {
                 <Skeleton className="h-5 w-20" />
               ) : nextPeriod ? (
                 <p className="text-muted-foreground">
-                  {format(correctDate(nextPeriod.startDate), 'MMM dd')} —{' '}
-                  {format(correctDate(nextPeriod.endDate), 'MMM dd')}
+                  {format(nextPeriod.startDate, 'MMM dd')} —{' '}
+                  {format(nextPeriod.endDate, 'MMM dd')}
                 </p>
               ) : (
                 <p className="text-muted-foreground">No data</p>
