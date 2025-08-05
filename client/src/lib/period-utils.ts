@@ -2,6 +2,7 @@ import {
   addDays,
   differenceInCalendarDays,
   isValid,
+  startOfDay,
   startOfToday,
   subDays,
 } from 'date-fns';
@@ -21,7 +22,7 @@ export function calculateCurrentPeriodCycle(periodStartDate?: Date) {
   }
 
   const today = startOfToday();
-  if (periodStartDate > today) {
+  if (startOfDay(periodStartDate) > today) {
     return null;
   }
 
