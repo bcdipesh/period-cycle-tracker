@@ -98,19 +98,3 @@ export function predictFertileWindowForCurrentCycle({
     endDate,
   };
 }
-
-/**
- * A date correction function that takes a date object that was incorrectly
- * parsed as midnight UTC and returns a new Date object representing
- * midnight in the server's local timezone.
- *
- * @param {Date} utcDate - The date object from Prisma.
- * @returns {Date} The corrected date object.
- */
-export function correctDate(utcDate: Date): Date {
-  return new Date(
-    utcDate.getUTCFullYear(),
-    utcDate.getUTCMonth(),
-    utcDate.getUTCDate(),
-  );
-}
